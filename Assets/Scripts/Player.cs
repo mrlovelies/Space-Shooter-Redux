@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, Controls.IPlayerActions
 {
@@ -11,6 +12,11 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private float _fireRate = 0.15f;
     [SerializeField] private bool _isTripleShotActive = false;
     [SerializeField] private float _tripleShotDuration = 3f;
+    [SerializeField] private bool _isSpeedBoostActive = false;
+    [SerializeField] private float _speedBoostMultiplier = 1.5f;
+    [SerializeField] private float _speedBoostDuration = 5f;
+    [SerializeField] private bool _isShieldActive = false;
+    [SerializeField] private GameObject _shieldVisualizer;
     private float _canFire = -1f;
     private Vector3 _direction;
     [SerializeField] private GameObject _laserPrefab;
@@ -52,6 +58,13 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
     public void Damage()
     {
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+            return;
+        }
+        
         _lives--;
 
         if (_lives < 1)
@@ -64,13 +77,33 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     public void ActivateTripleShot()
     {
         _isTripleShotActive = true;
-        StartCoroutine(DeactivateTripleShot());
+        StartCoroutine(DeactivateTripleShotRoutine());
     }
 
-    IEnumerator DeactivateTripleShot()
+    public void ActivateSpeedBoost()
+    {
+        if (!_isSpeedBoostActive) _speed *= _speedBoostMultiplier;
+        _isSpeedBoostActive = true;
+        StartCoroutine(DeactivateSpeedBoostRoutine());
+    }
+
+    public void ActivateShield()
+    {
+        _shieldVisualizer.SetActive(true);
+        _isShieldActive = true;
+    }
+
+    IEnumerator DeactivateTripleShotRoutine()
     {
         yield return new WaitForSeconds(_tripleShotDuration);
         _isTripleShotActive = false;
+    }
+
+    IEnumerator DeactivateSpeedBoostRoutine()
+    {
+        yield return new WaitForSeconds(_speedBoostDuration);
+        if (_isSpeedBoostActive) _speed /= _speedBoostMultiplier;
+        _isSpeedBoostActive = false;
     }
 
     public void OnMove(InputAction.CallbackContext context)

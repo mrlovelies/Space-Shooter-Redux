@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();

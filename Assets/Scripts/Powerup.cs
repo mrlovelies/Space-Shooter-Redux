@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5;
-    // Start is called before the first frame update
+    
+    [SerializeField] private int _powerupID; // 0: Triple Shot | 1: Speed Boost | 2: Shields
+    [SerializeField] private float _speed = 5f;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();
@@ -34,8 +34,21 @@ public class Powerup : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
             if (player == null) Debug.LogError("Powerup::Player is NULL");
-            
-            player.ActivateTripleShot();
+         
+            switch (_powerupID)
+            {
+                case 0:
+                    player.ActivateTripleShot();
+                    break;
+                case 1:
+                    player.ActivateSpeedBoost();
+                    break;
+                case 2:
+                    player.ActivateShield();
+                    break;
+                default:
+                    break;
+            }
             
             Destroy(gameObject);
         }

@@ -7,6 +7,8 @@ TagManager:
   - Laser
   - Spawn_Manager
   - Enemy
+  - Triple_Shot
+  - Shield_Visualizer
   layers:
   - Default
   - TransparentFX
@@ -44,9 +46,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Foreground
-    uniqueID: 4063004009
-    locked: 0
   - name: Background
     uniqueID: 2406440173
+    locked: 0
+  - name: Foreground
+    uniqueID: 4063004009
     locked: 0
