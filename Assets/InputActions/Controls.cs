@@ -37,17 +37,6 @@ public class @Controls : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""WASD"",
                     ""id"": ""00ca640b-d935-4593-8157-c05846ea39b3"",
                     ""path"": ""Dpad"",
@@ -148,6 +137,17 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
                     ""path"": ""<XRController>/{Primary2DAxis}"",
                     ""interactions"": """",
@@ -198,6 +198,44 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Death Menu"",
+            ""id"": ""d97a1dc7-d633-4e27-be7d-39ba0b449301"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bcb5d85-c4f0-4c11-b3e6-997236b03af0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e98f2738-a660-4913-88e7-52757cdc033e"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c4362c0-7cd2-4f35-a633-0f21d47fbccf"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -271,6 +309,9 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        // Death Menu
+        m_DeathMenu = asset.FindActionMap("Death Menu", throwIfNotFound: true);
+        m_DeathMenu_Restart = m_DeathMenu.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -357,6 +398,39 @@ public class @Controls : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Death Menu
+    private readonly InputActionMap m_DeathMenu;
+    private IDeathMenuActions m_DeathMenuActionsCallbackInterface;
+    private readonly InputAction m_DeathMenu_Restart;
+    public struct DeathMenuActions
+    {
+        private @Controls m_Wrapper;
+        public DeathMenuActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_DeathMenu_Restart;
+        public InputActionMap Get() { return m_Wrapper.m_DeathMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DeathMenuActions set) { return set.Get(); }
+        public void SetCallbacks(IDeathMenuActions instance)
+        {
+            if (m_Wrapper.m_DeathMenuActionsCallbackInterface != null)
+            {
+                @Restart.started -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_DeathMenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
+            }
+        }
+    }
+    public DeathMenuActions @DeathMenu => new DeathMenuActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -406,5 +480,9 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+    }
+    public interface IDeathMenuActions
+    {
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

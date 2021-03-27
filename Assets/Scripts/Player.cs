@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour, Controls.IPlayerActions
 {
@@ -13,17 +15,20 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private bool _isTripleShotActive = false;
     [SerializeField] private float _tripleShotDuration = 3f;
     [SerializeField] private bool _isSpeedBoostActive = false;
-    [SerializeField] private float _speedBoostMultiplier = 1.5f;
+    [SerializeField] private float _speedBoostMultiplier = 1.25f;
     [SerializeField] private float _speedBoostDuration = 5f;
     [SerializeField] private bool _isShieldActive = false;
-    [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private int _score = 0;
     private float _canFire = -1f;
     private Vector3 _direction;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _shieldVisualizer;
     private SpawnManager _spawnManager;
-    
+    private UIManager _uiManager;
+
+    private PlayerInput _playerInput;
     private Controls.IPlayerActions _playerActionsImplementation;
 
     // Start is called before the first frame update
@@ -31,6 +36,9 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         _spawnManager = GameObject.FindWithTag("Spawn_Manager").GetComponent<SpawnManager>();
         if (_spawnManager == null) Debug.LogError("SpawnManager::Player is NULL");
+        _uiManager = GameObject.FindWithTag("UI_Manager").GetComponent<UIManager>();
+        if (_uiManager == null) Debug.LogError("UIManager::Player is NULL");
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
@@ -43,7 +51,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         transform.Translate(_direction * (_speed * Time.deltaTime));
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9f, 0f), transform.position.y, 0);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9f, 7.5f), transform.position.y, 0);
         
         if (transform.position.y >= 7.5)
             transform.position = new Vector3(transform.position.x, -5.5f, 0);
@@ -66,12 +74,21 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         }
         
         _lives--;
+        _uiManager.UpdateLives(_lives);
 
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(gameObject);   
+            _uiManager.OnPlayerDeath();
+            OnPlayerDeath();
+            gameObject.SetActive(false);
+            //Destroy(gameObject);   
         }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _playerInput.currentActionMap = _playerInput.actions.FindActionMap("Death Menu");
     }
 
     public void ActivateTripleShot()
@@ -91,6 +108,18 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         _shieldVisualizer.SetActive(true);
         _isShieldActive = true;
+    }
+
+    public void EnemyKill()
+    {
+        int pointsToAdd = Random.Range(10, 21);
+        AddScore(pointsToAdd);
+    }
+
+    public void AddScore(int score)
+    {
+        _score += score;
+        _uiManager.UpdateScore(_score);
     }
 
     IEnumerator DeactivateTripleShotRoutine()

@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Triple_Shot
   - Shield_Visualizer
+  - UI_Manager
   layers:
   - Default
   - TransparentFX
@@ -48,6 +49,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2406440173
+    locked: 0
+  - name: Particles
+    uniqueID: 520610605
     locked: 0
   - name: Foreground
     uniqueID: 4063004009
