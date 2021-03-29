@@ -10,6 +10,9 @@ TagManager:
   - Triple_Shot
   - Shield_Visualizer
   - UI_Manager
+  - Input_Manager
+  - BG1
+  - BG2
   layers:
   - Default
   - TransparentFX

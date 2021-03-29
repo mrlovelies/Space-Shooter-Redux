@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +13,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _livesSprite;
     [SerializeField] private Text _gameOverText;
     [SerializeField] private Text _restartText;
-    private PlayerInput _deathActions;
 
     void Start()
     {
         _scoreText.text = $"Score: {0}";
         _gameOverText.gameObject.SetActive(false);
-        _deathActions = GetComponent<PlayerInput>();
-        if (_deathActions != null) _deathActions.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        Player.onPlayerDeath += this.OnPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        Player.onPlayerDeath -= this.OnPlayerDeath;
     }
 
     public void UpdateScore(int playerScore)
@@ -45,7 +53,6 @@ public class UIManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        _deathActions.enabled = true;
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());

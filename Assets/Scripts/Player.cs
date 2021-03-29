@@ -27,8 +27,11 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private GameObject _shieldVisualizer;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    private InputManager _inputManager;
 
-    private PlayerInput _playerInput;
+    public delegate void PlayerDeath();
+    public static event PlayerDeath onPlayerDeath;
+    
     private Controls.IPlayerActions _playerActionsImplementation;
 
     // Start is called before the first frame update
@@ -36,9 +39,12 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         _spawnManager = GameObject.FindWithTag("Spawn_Manager").GetComponent<SpawnManager>();
         if (_spawnManager == null) Debug.LogError("SpawnManager::Player is NULL");
+
         _uiManager = GameObject.FindWithTag("UI_Manager").GetComponent<UIManager>();
         if (_uiManager == null) Debug.LogError("UIManager::Player is NULL");
-        _playerInput = GetComponent<PlayerInput>();
+
+        _inputManager = GameObject.FindWithTag("Input_Manager").GetComponent<InputManager>();
+        if (_inputManager == null) Debug.LogError("InputManager::Player is NULL");
     }
 
     // Update is called once per frame
@@ -51,7 +57,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         transform.Translate(_direction * (_speed * Time.deltaTime));
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9f, 7.5f), transform.position.y, 0);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -7.87f, 7.5f), transform.position.y, 0);
         
         if (transform.position.y >= 7.5)
             transform.position = new Vector3(transform.position.x, -5.5f, 0);
@@ -78,17 +84,9 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
         if (_lives < 1)
         {
-            _spawnManager.OnPlayerDeath();
-            _uiManager.OnPlayerDeath();
-            OnPlayerDeath();
-            gameObject.SetActive(false);
-            //Destroy(gameObject);   
+            onPlayerDeath?.Invoke();
+            Destroy(gameObject);   
         }
-    }
-
-    public void OnPlayerDeath()
-    {
-        _playerInput.currentActionMap = _playerInput.actions.FindActionMap("Death Menu");
     }
 
     public void ActivateTripleShot()

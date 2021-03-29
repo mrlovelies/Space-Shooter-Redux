@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -17,6 +19,16 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
+    }
+
+    private void OnEnable()
+    {
+        Player.onPlayerDeath += this.OnPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        Player.onPlayerDeath -= this.OnPlayerDeath;
     }
 
     public void OnPlayerDeath()

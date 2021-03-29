@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,12 +14,15 @@ public class Starfield : MonoBehaviour
     float xOffset;
     float yOffset;
 
+    private Transform mainCamera;
+
     ParticleSystem Particles;
     ParticleSystem.Particle[] Stars;
 
 
     void Awake()
     {
+        mainCamera = Camera.main.transform;
         Stars = new ParticleSystem.Particle[MaxStars];
         Particles = GetComponent<ParticleSystem>();
 
@@ -47,5 +48,35 @@ public class Starfield : MonoBehaviour
         float x = Random.Range(0, width);
         float y = Random.Range(0, height);
         return new Vector3(x - xOffset, y - yOffset, 0);
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < MaxStars; i++)
+        {
+            Vector3 pos = Stars[i].position + transform.position;
+
+            if (pos.x < (mainCamera.position.x - xOffset))
+            {
+                pos.x += FieldWidth;
+            }
+            else if (pos.x > (mainCamera.position.x + xOffset))
+            {
+                pos.x -= FieldWidth;
+            }
+
+            if (pos.y < (mainCamera.position.y - yOffset))
+            {
+                pos.y += FieldHeight;
+            }
+            else if (pos.y > (mainCamera.position.y + yOffset))
+            {
+                pos.y -= FieldHeight;
+            }
+
+            Stars[i].position = pos - transform.position;
+        }
+        Particles.SetParticles(Stars, Stars.Length);
+
     }
 }
