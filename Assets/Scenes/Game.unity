@@ -324,12 +324,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648354e848d0d7e4dbe2d2973dbb096d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStars: 100
-  StarSize: 0.1
-  StarSizeRange: 0.5
+  MaxStars: 200
+  StarSize: 0.025
+  StarSizeRange: 0.1
   FieldWidth: 30
   FieldHeight: 15
-  Colorize: 1
+  Colorize: 0
 --- !u!198 &294534541
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5947,12 +5947,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648354e848d0d7e4dbe2d2973dbb096d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStars: 100
-  StarSize: 0.1
-  StarSizeRange: 0.5
+  MaxStars: 200
+  StarSize: 0.025
+  StarSizeRange: 0.1
   FieldWidth: 30
   FieldHeight: 15
-  Colorize: 1
+  Colorize: 0
 --- !u!199 &1067550685
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -11446,12 +11446,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648354e848d0d7e4dbe2d2973dbb096d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStars: 100
-  StarSize: 0.1
-  StarSizeRange: 0.5
+  MaxStars: 200
+  StarSize: 0.025
+  StarSizeRange: 0.1
   FieldWidth: 30
   FieldHeight: 15
-  Colorize: 1
+  Colorize: 0
 --- !u!199 &2036311767
 ParticleSystemRenderer:
   serializedVersion: 6
