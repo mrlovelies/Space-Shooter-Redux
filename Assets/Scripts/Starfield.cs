@@ -14,7 +14,7 @@ public class Starfield : MonoBehaviour
     float xOffset;
     float yOffset;
 
-    private Transform mainCamera;
+    private Transform bgCamera;
 
     ParticleSystem Particles;
     ParticleSystem.Particle[] Stars;
@@ -22,7 +22,7 @@ public class Starfield : MonoBehaviour
 
     void Awake()
     {
-        mainCamera = Camera.main.transform;
+        bgCamera = GameObject.FindWithTag("BG_Camera").transform;
         Stars = new ParticleSystem.Particle[MaxStars];
         Particles = GetComponent<ParticleSystem>();
 
@@ -56,20 +56,20 @@ public class Starfield : MonoBehaviour
         {
             Vector3 pos = Stars[i].position + transform.position;
 
-            if (pos.x < (mainCamera.position.x - xOffset))
+            if (pos.x < (bgCamera.position.x - xOffset))
             {
                 pos.x += FieldWidth;
             }
-            else if (pos.x > (mainCamera.position.x + xOffset))
+            else if (pos.x > (bgCamera.position.x + xOffset))
             {
                 pos.x -= FieldWidth;
             }
 
-            if (pos.y < (mainCamera.position.y - yOffset))
+            if (pos.y < (bgCamera.position.y - yOffset))
             {
                 pos.y += FieldHeight;
             }
-            else if (pos.y > (mainCamera.position.y + yOffset))
+            else if (pos.y > (bgCamera.position.y + yOffset))
             {
                 pos.y -= FieldHeight;
             }

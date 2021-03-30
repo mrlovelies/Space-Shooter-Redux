@@ -13,6 +13,7 @@ TagManager:
   - Input_Manager
   - BG1
   - BG2
+  - BG_Camera
   layers:
   - Default
   - TransparentFX
