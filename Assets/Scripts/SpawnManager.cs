@@ -8,15 +8,16 @@ using Random = UnityEngine.Random;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private float _enemySpawnRate = 2.5f;
-    private bool _isSpawningActive = true;
+    private bool _isSpawningActive = false;
 
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private GameObject _powerUpContainer;
     
-    void Start()
+    public void StartSpawning()
     {
+        _isSpawningActive = true;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
@@ -38,6 +39,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(3f);
+
         while (_isSpawningActive)
         {
             Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
@@ -48,6 +51,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(5f);
+
         while (_isSpawningActive)
         {
             float _nextSpawn = Random.Range(3f, 8f);
