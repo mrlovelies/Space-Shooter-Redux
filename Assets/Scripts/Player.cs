@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private GameObject[] _engineDamage;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private InputManager _inputManager;
@@ -81,6 +82,25 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         
         _lives--;
         _uiManager.UpdateLives(_lives);
+
+        int engineNum = Random.Range(0, 2);
+
+        // TODO: Look into refactoring this
+        if (!_engineDamage[engineNum].activeSelf)
+        {
+            _engineDamage[engineNum].SetActive(true);
+        }
+        else
+        {
+            if (engineNum == 0)
+            {
+                _engineDamage[1].SetActive(true);
+            }
+            else if (engineNum == 1)
+            {
+                _engineDamage[0].SetActive(true);
+            }
+        }
 
         if (_lives < 1)
         {
