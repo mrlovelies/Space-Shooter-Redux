@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private AudioSource _audioSource;
     [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private GameObject _laserContainer;
+    private GameObject _laserContainer;
 
     void Start()
     {
