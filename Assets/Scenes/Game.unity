@@ -6166,10 +6166,15 @@ MonoBehaviour:
   _speedBoostDuration: 5
   _isShieldActive: 0
   _score: 0
+  _shieldPower: 0
   _laserPrefab: {fileID: 8873459004795790347, guid: a11198abb073e5c4d88c9d874913fbc3, type: 3}
   _laserContainer: {fileID: 2067397337}
   _tripleShotPrefab: {fileID: 5993715620958758220, guid: f1edb99a4fb34d947baee7d0c024fbd7, type: 3}
   _shieldVisualizer: {fileID: 1395878071}
+  _shieldPowerColor:
+  - {r: 1, g: 0, b: 0, a: 0.5882353}
+  - {r: 1, g: 0, b: 0.6666667, a: 0.5882353}
+  - {r: 1, g: 1, b: 1, a: 0.3529412}
   _engineDamage:
   - {fileID: 1275193265}
   - {fileID: 1310189639}
@@ -11453,7 +11458,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 333b0196b7a764df5a7768ead9b69dbc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

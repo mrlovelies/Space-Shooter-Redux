@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -21,12 +22,15 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedBoostDuration = 5f;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
+    [SerializeField] private int _shieldPower = 0;
     private float _canFire = -1f;
     private Vector3 _direction;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private Color[] _shieldPowerColor;
+    private SpriteRenderer _shieldVisualizerSprite;
     [SerializeField] private GameObject[] _engineDamage;
     [SerializeField] private GameObject _thruster;
     [SerializeField] private AudioClip _laserSoundClip;
@@ -51,6 +55,9 @@ public class Player : MonoBehaviour
 
         _inputManager = GameObject.FindWithTag("Input_Manager").GetComponent<InputManager>();
         if (_inputManager == null) Debug.LogError("InputManager::Player is NULL");
+
+        _shieldVisualizerSprite = _shieldVisualizer.GetComponent<SpriteRenderer>();
+        if (_shieldVisualizerSprite == null) Debug.LogError("Shield_Visualizer->SpriteRenderer::Player is NULL"); 
 
         _audioSource = GetComponent<AudioSource>();
         //Assert.IsNull(_audioSource, "_audioSource == null");
@@ -91,11 +98,18 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldPower--;
+            _shieldVisualizerSprite.color = _shieldPowerColor[_shieldPower - 1];
+
+            if (_shieldPower < 1)
+            {
+                _isShieldActive = false;
+                _shieldVisualizer.SetActive(false);
+            } 
             return;
         }
         
+
         _lives--;
         _uiManager.UpdateLives(_lives);
 
@@ -140,6 +154,8 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
+        _shieldVisualizerSprite.color = new Color(255f, 255f, 255f, 255f);
+        _shieldPower = 3;
         _shieldVisualizer.SetActive(true);
         _isShieldActive = true;
     }
