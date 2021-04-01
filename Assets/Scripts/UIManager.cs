@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _livesSprite;
     [SerializeField] private Text _gameOverText;
     [SerializeField] private Text _restartText;
+    [SerializeField] private Text _ammoText;
 
     void Start()
     {
@@ -38,6 +39,16 @@ public class UIManager : MonoBehaviour
     public void UpdateLives(int livesRemaining)
     {
         _livesImage.sprite = _livesSprite[livesRemaining];
+    }
+
+    public void UpdateAmmo(int ammoCurrent, int ammoMax)
+    {
+        _ammoText.text = $"{ammoCurrent}/{ammoMax}";
+
+        if (ammoCurrent == 0)
+        {
+            _ammoText.color = Color.red;
+        }
     }
 
     IEnumerator GameOverFlickerRoutine()
