@@ -15,6 +15,7 @@ TagManager:
   - BG2
   - BG_Camera
   - Enemy_Laser
+  - Laser_Container
   layers:
   - Default
   - TransparentFX

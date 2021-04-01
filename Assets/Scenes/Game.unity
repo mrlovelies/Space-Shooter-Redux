@@ -6142,6 +6142,7 @@ MonoBehaviour:
   _tripleShotDuration: 3
   _isSpeedBoostActive: 0
   _speedBoostMultiplier: 1.25
+  _thrusterMultiplier: 1.5
   _speedBoostDuration: 5
   _isShieldActive: 0
   _score: 0
@@ -16999,7 +17000,7 @@ GameObject:
   - component: {fileID: 2067397338}
   m_Layer: 0
   m_Name: Laser_Container
-  m_TagString: Untagged
+  m_TagString: Laser_Container
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

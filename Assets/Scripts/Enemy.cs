@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour
 
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null) Debug.LogError("AudioSource::Enemy is NULL");
+
+        _laserContainer = GameObject.FindWithTag("Laser_Container");
+        if (_laserContainer == null) Debug.LogError("Laser_Container::Enemy is NULL");
+
     }
 
     void Update()
