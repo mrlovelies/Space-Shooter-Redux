@@ -33,6 +33,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""b53f894b-12b4-4524-adcc-928833b7f010"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -200,6 +208,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87913910-7cd0-4446-a9bf-324cf36cc042"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05121047-bab0-43fb-9bfc-58b1ac2a6c36"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -211,6 +241,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Restart"",
                     ""type"": ""Button"",
                     ""id"": ""9bcb5d85-c4f0-4c11-b3e6-997236b03af0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0dcf0b7-f24f-44cf-aa19-3bda4e3c6189"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -236,6 +274,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb44187b-9542-49a4-af7f-0b78623a3afc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""858361ec-59c1-49f0-95c6-e37ab5d1c834"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -309,9 +369,11 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
         // Death Menu
         m_DeathMenu = asset.FindActionMap("Death Menu", throwIfNotFound: true);
         m_DeathMenu_Restart = m_DeathMenu.FindAction("Restart", throwIfNotFound: true);
+        m_DeathMenu_Quit = m_DeathMenu.FindAction("Quit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -363,12 +425,14 @@ public class @Controls : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_Quit;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @Quit => m_Wrapper.m_Player_Quit;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -384,6 +448,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @Quit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,6 +461,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
             }
         }
     }
@@ -403,11 +473,13 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_DeathMenu;
     private IDeathMenuActions m_DeathMenuActionsCallbackInterface;
     private readonly InputAction m_DeathMenu_Restart;
+    private readonly InputAction m_DeathMenu_Quit;
     public struct DeathMenuActions
     {
         private @Controls m_Wrapper;
         public DeathMenuActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Restart => m_Wrapper.m_DeathMenu_Restart;
+        public InputAction @Quit => m_Wrapper.m_DeathMenu_Quit;
         public InputActionMap Get() { return m_Wrapper.m_DeathMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -420,6 +492,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Restart.started -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
                 @Restart.performed -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
                 @Restart.canceled -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
+                @Quit.started -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
             }
             m_Wrapper.m_DeathMenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -427,6 +502,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
             }
         }
     }
@@ -480,9 +558,11 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
     public interface IDeathMenuActions
     {
         void OnRestart(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
 }

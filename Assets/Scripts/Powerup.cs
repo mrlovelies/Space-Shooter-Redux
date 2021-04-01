@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Powerup : MonoBehaviour
 {
     
     [SerializeField] private int _powerupID; // 0: Triple Shot | 1: Speed Boost | 2: Shields
     [SerializeField] private float _speed = 5f;
+    [SerializeField] private AudioClip _audioClip;
     void Start()
     {
-        
     }
 
     void Update()
@@ -50,6 +51,7 @@ public class Powerup : MonoBehaviour
                     break;
             }
             
+            AudioSource.PlayClipAtPoint(_audioClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 1f);
             Destroy(gameObject);
         }
     }

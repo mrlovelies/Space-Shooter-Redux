@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Player : MonoBehaviour, Controls.IPlayerActions
+public class Player : MonoBehaviour
 {
     [SerializeField] private int _lives = 3;
     [SerializeField] private float _speed = 10.0f;
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject[] _engineDamage;
+    [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private AudioClip _powerUpSoundClip;
+    private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private InputManager _inputManager;
@@ -46,6 +50,17 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
         _inputManager = GameObject.FindWithTag("Input_Manager").GetComponent<InputManager>();
         if (_inputManager == null) Debug.LogError("InputManager::Player is NULL");
+
+        _audioSource = GetComponent<AudioSource>();
+        //Assert.IsNull(_audioSource, "_audioSource == null");
+        if (_audioSource == null)
+        {
+            Debug.LogError("Null");
+        }
+        else
+        {
+            _audioSource.clip = _laserSoundClip;
+        }
     }
 
     // Update is called once per frame
@@ -164,6 +179,8 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
         if (Time.time > _canFire)
         {
+            _audioSource.Play();
+
             if (_isTripleShotActive)
             {
                 InstantiateLaser(_tripleShotPrefab);

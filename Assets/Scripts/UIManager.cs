@@ -64,4 +64,11 @@ public class UIManager : MonoBehaviour
 
         SceneManager.LoadScene("Game");
     }
+
+    public void OnQuit(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        Application.Quit();
+    }
 }
