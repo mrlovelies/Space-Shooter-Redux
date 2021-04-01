@@ -6171,6 +6171,7 @@ MonoBehaviour:
   _laserContainer: {fileID: 2067397337}
   _tripleShotPrefab: {fileID: 5993715620958758220, guid: f1edb99a4fb34d947baee7d0c024fbd7, type: 3}
   _shieldVisualizer: {fileID: 1395878071}
+  _explosionPrefab: {fileID: 528337505349881670, guid: b987c82504602a046adb36d4e1c0aa48, type: 3}
   _shieldPowerColor:
   - {r: 1, g: 0, b: 0, a: 0.5882353}
   - {r: 1, g: 0, b: 0.6666667, a: 0.5882353}

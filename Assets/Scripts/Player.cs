@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private GameObject _explosionPrefab;
     [SerializeField] private Color[] _shieldPowerColor;
     private SpriteRenderer _shieldVisualizerSprite;
     [SerializeField] private GameObject[] _engineDamage;
@@ -99,13 +100,16 @@ public class Player : MonoBehaviour
         if (_isShieldActive)
         {
             _shieldPower--;
-            _shieldVisualizerSprite.color = _shieldPowerColor[_shieldPower - 1];
 
             if (_shieldPower < 1)
             {
                 _isShieldActive = false;
                 _shieldVisualizer.SetActive(false);
-            } 
+            }
+            else
+            {
+                _shieldVisualizerSprite.color = _shieldPowerColor[_shieldPower - 1];
+            }
             return;
         }
         
@@ -134,6 +138,11 @@ public class Player : MonoBehaviour
 
         if (_lives < 1)
         {
+            _speed = 0;
+            GameObject explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(gameObject, .5f);
+            Destroy(explosion, 2.5f);
             onPlayerDeath?.Invoke();
             Destroy(gameObject);   
         }
@@ -154,8 +163,8 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
-        _shieldVisualizerSprite.color = new Color(255f, 255f, 255f, 255f);
         _shieldPower = 3;
+        _shieldVisualizerSprite.color = _shieldPowerColor[_shieldPower - 1];
         _shieldVisualizer.SetActive(true);
         _isShieldActive = true;
     }
