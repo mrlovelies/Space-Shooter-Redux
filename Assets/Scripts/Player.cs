@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedBoostMultiplier = 1.25f;
     [SerializeField] private float _thrusterMultiplier = 1.5f;
     [SerializeField] private float _speedBoostDuration = 5f;
+    [SerializeField] private int _ammoMax = 15;
+    [SerializeField] private int _ammoCurrent = 15;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
     [SerializeField] private int _shieldPower = 0;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] _engineDamage;
     [SerializeField] private GameObject _thruster;
     [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private AudioClip _ammoEmptySoundClip;
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
@@ -203,8 +206,9 @@ public class Player : MonoBehaviour
     {
         if (!context.performed) return;
 
-        if (Time.time > _canFire)
+        if (Time.time > _canFire && _ammoCurrent > 0)
         {
+            _audioSource.clip = _laserSoundClip;
             _audioSource.Play();
 
             if (_isTripleShotActive)
@@ -215,8 +219,16 @@ public class Player : MonoBehaviour
             {
                 InstantiateLaser(_laserPrefab);
             }
-            
+
+            _ammoCurrent--;
+            _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
             _canFire = Time.time + _fireRate;
+        }
+        else
+        {
+            _audioSource.volume = .5f;
+            _audioSource.clip = _ammoEmptySoundClip;
+            _audioSource.Play();
         }
     }
 
