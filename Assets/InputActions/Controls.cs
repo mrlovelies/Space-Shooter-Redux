@@ -41,6 +41,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Thrusters"",
+                    ""type"": ""Button"",
+                    ""id"": ""01e6a05d-16ff-41d0-85e4-1b5c20569b77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -230,6 +238,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f55134a-83e2-476d-a210-a2f8c9a686c9"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Thrusters"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ae398b1-7325-445b-9c18-23739bd9c43f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrusters"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -370,6 +400,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
+        m_Player_Thrusters = m_Player.FindAction("Thrusters", throwIfNotFound: true);
         // Death Menu
         m_DeathMenu = asset.FindActionMap("Death Menu", throwIfNotFound: true);
         m_DeathMenu_Restart = m_DeathMenu.FindAction("Restart", throwIfNotFound: true);
@@ -426,6 +457,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Quit;
+    private readonly InputAction m_Player_Thrusters;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -433,6 +465,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Quit => m_Wrapper.m_Player_Quit;
+        public InputAction @Thrusters => m_Wrapper.m_Player_Thrusters;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -451,6 +484,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Quit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @Thrusters.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
+                @Thrusters.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
+                @Thrusters.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -464,6 +500,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
+                @Thrusters.started += instance.OnThrusters;
+                @Thrusters.performed += instance.OnThrusters;
+                @Thrusters.canceled += instance.OnThrusters;
             }
         }
     }
@@ -559,6 +598,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
+        void OnThrusters(InputAction.CallbackContext context);
     }
     public interface IDeathMenuActions
     {

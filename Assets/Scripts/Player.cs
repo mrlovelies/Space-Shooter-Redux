@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _tripleShotDuration = 3f;
     [SerializeField] private bool _isSpeedBoostActive = false;
     [SerializeField] private float _speedBoostMultiplier = 1.25f;
+    [SerializeField] private float _thrusterMultiplier = 1.5f;
     [SerializeField] private float _speedBoostDuration = 5f;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
@@ -27,8 +28,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject[] _engineDamage;
+    [SerializeField] private GameObject _thruster;
     [SerializeField] private AudioClip _laserSoundClip;
-    [SerializeField] private AudioClip _powerUpSoundClip;
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
@@ -191,6 +192,19 @@ public class Player : MonoBehaviour
             }
             
             _canFire = Time.time + _fireRate;
+        }
+    }
+
+    public void OnThrusters(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _thruster.SetActive(true);
+            _speed *= _thrusterMultiplier;
+        } else if (context.canceled)
+        {
+            _thruster.SetActive(false);
+            _speed /= _thrusterMultiplier;
         }
     }
 }
