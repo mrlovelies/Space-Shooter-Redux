@@ -5238,6 +5238,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e0dcf0b7-f24f-44cf-aa19-3bda4e3c6189
     m_ActionName: Death Menu/Quit[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1002145832}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnThrusters
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 01e6a05d-16ff-41d0-85e4-1b5c20569b77
+    m_ActionName: Player/Thrusters[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -6136,8 +6152,8 @@ MonoBehaviour:
   _engineDamage:
   - {fileID: 1275193265}
   - {fileID: 1310189639}
+  _thruster: {fileID: 1867121917}
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
-  _powerUpSoundClip: {fileID: 0}
 --- !u!4 &1002145834
 Transform:
   m_ObjectHideFlags: 0
@@ -11947,7 +11963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1867121918
 Transform:
   m_ObjectHideFlags: 0
