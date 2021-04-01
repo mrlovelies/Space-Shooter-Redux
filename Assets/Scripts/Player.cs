@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _tripleShotDuration = 3f;
     [SerializeField] private bool _isSpeedBoostActive = false;
     [SerializeField] private float _speedBoostMultiplier = 1.25f;
+    [SerializeField] private float _thrusterMultiplier = 1.5f;
     [SerializeField] private float _speedBoostDuration = 5f;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
@@ -199,11 +200,11 @@ public class Player : MonoBehaviour
         if (context.started)
         {
             _thruster.SetActive(true);
-            _speed *= 1.5f;
+            _speed *= _thrusterMultiplier;
         } else if (context.canceled)
         {
             _thruster.SetActive(false);
-            _speed /= 1.5f;
+            _speed /= _thrusterMultiplier;
         }
     }
 }
