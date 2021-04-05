@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
             _speed = .5f;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, 2.8f);
+            Destroy(gameObject, .50f);
         }
 
         if (other.CompareTag("Laser"))
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             if (_player != null) _player.EnemyKill();
             Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, 2.8f);
+            Destroy(gameObject, .50f);
         }
     }
 }

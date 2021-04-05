@@ -49,6 +49,10 @@ public class UIManager : MonoBehaviour
         {
             _ammoText.color = Color.red;
         }
+        else
+        {
+            _ammoText.color = Color.white;
+        }
     }
 
     IEnumerator GameOverFlickerRoutine()

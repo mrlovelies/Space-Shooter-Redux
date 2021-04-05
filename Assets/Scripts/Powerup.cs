@@ -47,6 +47,9 @@ public class Powerup : MonoBehaviour
                 case 2:
                     player.ActivateShield();
                     break;
+                case 3:
+                    player.AddAmmo();
+                    break;
                 default:
                     break;
             }

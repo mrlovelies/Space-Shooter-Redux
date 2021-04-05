@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542222873203725854}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 8542222873785168620}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8542222873203725848
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -231963287
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 29e3433e3d7a22544b65219b46516d72, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,7 +153,6 @@ MonoBehaviour:
   _speed: 5
   _fireRate: 3
   _laserPrefab: {fileID: 6947159777418976267, guid: c1d3a611b660e9f4e8e0de3d73f75215, type: 3}
-  _laserContainer: {fileID: 0}
 --- !u!50 &8542222873785168530
 Rigidbody2D:
   serializedVersion: 4
@@ -251,14 +250,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.09896088, y: 0.57153445}
-      - {x: -0.015233859, y: 0.18222338}
-      - {x: -0.67348385, y: 0.18373993}
-      - {x: -0.67056733, y: -0.18750738}
-      - {x: 0.034600392, y: -0.1899148}
-      - {x: 0.03024656, y: -0.5811907}
-      - {x: 0.6728369, y: -0.23745082}
-      - {x: 0.66322136, y: 0.24416313}
+    - - {x: 0.4000114, y: 0.22366631}
+      - {x: -0.072171085, y: 0.23897433}
+      - {x: -0.35677212, y: 0.07087289}
+      - {x: -0.38542035, y: -0.105248876}
+      - {x: -0.310835, y: -0.15997687}
+      - {x: -0.1889008, y: -0.24054793}
+      - {x: 0.08467529, y: -0.24006042}
+      - {x: 0.09445077, y: -0.06680632}
+      - {x: 0.26177144, y: 0.021195188}
+      - {x: 0.38958514, y: 0.16505648}
 --- !u!82 &79883312736008581
 AudioSource:
   m_ObjectHideFlags: 0
