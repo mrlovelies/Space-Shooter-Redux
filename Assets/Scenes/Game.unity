@@ -6238,6 +6238,7 @@ MonoBehaviour:
   - {fileID: 5424107319975441838, guid: 1a37065aa9b82ce4e99fc880535373f5, type: 3}
   _powerUpContainer: {fileID: 1708742327}
   _ammoPowerup: {fileID: 7893438487611165871, guid: 4a6d71bf56702524fb00e821b554124b, type: 3}
+  _healthPowerup: {fileID: 8950631733149325670, guid: 60216b8d4ab173441b7722b51818e876, type: 3}
 --- !u!4 &1013458207
 Transform:
   m_ObjectHideFlags: 0
@@ -6306,7 +6307,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067550681
 GameObject:
@@ -17140,7 +17141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8827081983324613287, guid: 34f1a211176b6e74c929c132307d0713, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8827081983324613287, guid: 34f1a211176b6e74c929c132307d0713, type: 3}
       propertyPath: m_LocalPosition.x

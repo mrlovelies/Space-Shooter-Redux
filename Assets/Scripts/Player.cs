@@ -154,6 +154,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddHealth()
+    {
+        if (_lives > 2) return;
+
+        _lives++;
+        _uiManager.UpdateLives(_lives);
+
+        foreach (GameObject engine in _engineDamage)
+        {
+            if (engine.activeSelf)
+            {
+                engine.SetActive(false);
+                return;
+            }
+        }
+    }
+
     public void ActivateTripleShot()
     {
         _isTripleShotActive = true;
