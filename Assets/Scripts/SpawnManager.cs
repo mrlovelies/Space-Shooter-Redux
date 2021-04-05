@@ -15,12 +15,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private GameObject _powerUpContainer;
     [SerializeField] private GameObject _ammoPowerup;
+    [SerializeField] private GameObject _healthPowerup;
     public void StartSpawning()
     {
         _isSpawningActive = true;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnAmmoRoutine());
+        StartCoroutine(SpawnHealthRoutine());
     }
 
     private void OnEnable()
@@ -73,6 +75,19 @@ public class SpawnManager : MonoBehaviour
             float _nextSpawn = Random.Range(3f, 6f);
             Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
             Instantiate(_ammoPowerup, posToSpawn, Quaternion.identity, _powerUpContainer.transform);
+            yield return new WaitForSeconds(_nextSpawn);
+        }
+    }
+
+    IEnumerator SpawnHealthRoutine()
+    {
+        yield return new WaitForSeconds(20f);
+
+        while (_isSpawningActive)
+        {
+            float _nextSpawn = Random.Range(14f, 20f);
+            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
+            Instantiate(_healthPowerup, posToSpawn, Quaternion.identity, _powerUpContainer.transform);
             yield return new WaitForSeconds(_nextSpawn);
         }
     }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ammo_Powerup_anim
+  m_Name: Health_Powerup_anim
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 4651472796450862913, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
+      value: {fileID: -8396681882483885910, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
     - time: 0.2
-      value: {fileID: -8966168145293777993, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
+      value: {fileID: -4901253224599256145, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,8 +42,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 4651472796450862913, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
-    - {fileID: -8966168145293777993, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
+    - {fileID: -8396681882483885910, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
+    - {fileID: -4901253224599256145, guid: 72fc03888db8a224c965f9a5c9535e8b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
