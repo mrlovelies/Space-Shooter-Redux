@@ -6101,27 +6101,24 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.010676384, y: 0.67968464}
-      - {x: -0.3744889, y: 0.71474993}
-      - {x: -0.7346649, y: 0.8013643}
-      - {x: -1.5728102, y: 1.5765102}
-      - {x: -2.024335, y: 1.5729889}
-      - {x: -1.6532373, y: -0.052351594}
-      - {x: -2.041376, y: -1.60664}
-      - {x: -1.5567245, y: -1.6139197}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.3635651, y: -0.6702136}
-      - {x: 1.8612919, y: -0.6302469}
-      - {x: 2.0342636, y: -0.35744545}
-      - {x: 0.3957882, y: -0.35970935}
-      - {x: 0.37830544, y: -0.10828319}
-      - {x: 1.4385986, y: -0.1053592}
-      - {x: 1.4280529, y: 0.13813207}
-      - {x: 0.21119595, y: 0.14607763}
-      - {x: 0.19408798, y: 0.32978183}
-      - {x: 1.9479294, y: 0.3451202}
-      - {x: 2.0574112, y: 0.4769593}
-      - {x: 1.8372622, y: 0.6720413}
+    - - {x: -0.012552261, y: 0.30249992}
+      - {x: -0.11252689, y: 0.3833946}
+      - {x: -0.30041605, y: 0.46475515}
+      - {x: -0.89206886, y: 0.67173743}
+      - {x: -0.98023033, y: 0.5672724}
+      - {x: -0.987319, y: 0.424865}
+      - {x: -0.9402895, y: 0.1698659}
+      - {x: -0.80106544, y: -0.21182057}
+      - {x: -0.62473965, y: -0.39370263}
+      - {x: -0.80674076, y: -0.59542274}
+      - {x: -0.26840115, y: -0.5952265}
+      - {x: -0.08298969, y: -0.37279612}
+      - {x: 0.12797546, y: -0.37506557}
+      - {x: 0.22793674, y: -0.44760782}
+      - {x: 0.82480526, y: -0.41585752}
+      - {x: 1.0250254, y: -0.17226417}
+      - {x: 0.82383156, y: 0.12741904}
+      - {x: 0.48111916, y: 0.3205228}
 --- !u!50 &1002145831
 Rigidbody2D:
   serializedVersion: 4
@@ -6156,7 +6153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lives: 3
-  _speed: 10
+  _speed: 6.5
   _fireRate: 0.15
   _isTripleShotActive: 0
   _tripleShotDuration: 3
@@ -6240,6 +6237,7 @@ MonoBehaviour:
   - {fileID: 9089215532912662971, guid: 369f9371658dd6046bb2544a0171c7d7, type: 3}
   - {fileID: 5424107319975441838, guid: 1a37065aa9b82ce4e99fc880535373f5, type: 3}
   _powerUpContainer: {fileID: 1708742327}
+  _ammoPowerup: {fileID: 7893438487611165871, guid: 4a6d71bf56702524fb00e821b554124b, type: 3}
 --- !u!4 &1013458207
 Transform:
   m_ObjectHideFlags: 0
@@ -11333,7 +11331,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275193265}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.13, y: -1.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1845714838}
@@ -11364,7 +11362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310189639}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.08, z: 0}
+  m_LocalPosition: {x: 1.47, y: -2.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1659037901}
@@ -12082,7 +12080,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867121917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.42, y: 10.997966, z: -18.511934}
+  m_LocalPosition: {x: 8.374, y: 10.997966, z: -18.511934}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1540778193}
@@ -12113,13 +12111,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869726314}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1002145834}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1869726316
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12160,7 +12158,7 @@ SpriteRenderer:
   m_SortingLayerID: -231963287
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12af0e16d0922dd4fa8b4f2bd54ad189, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

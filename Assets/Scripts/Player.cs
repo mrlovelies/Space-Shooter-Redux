@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _lives = 3;
-    [SerializeField] private float _speed = 10.0f;
+    [SerializeField] private float _speed = 6.5f;
     [SerializeField] private float _fireRate = 0.15f;
     [SerializeField] private bool _isTripleShotActive = false;
     [SerializeField] private float _tripleShotDuration = 3f;
@@ -73,12 +73,15 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
+
+        _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculateMovement();
+        
     }
 
     void CalculateMovement()
@@ -170,6 +173,13 @@ public class Player : MonoBehaviour
         _shieldVisualizerSprite.color = _shieldPowerColor[_shieldPower - 1];
         _shieldVisualizer.SetActive(true);
         _isShieldActive = true;
+    }
+
+    public void AddAmmo()
+    {
+        _ammoCurrent += 10;
+        if (_ammoCurrent > _ammoMax) _ammoCurrent = _ammoMax;
+        _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
     }
 
     public void EnemyKill()
