@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
 
         while (_isSpawningActive)
         {
-            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
+            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4.5f, 4.5f), 0);
             Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer.transform);
             yield return new WaitForSeconds(_enemySpawnRate);
         }
@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
         {
             float _nextSpawn = Random.Range(3f, 8f);
             int _nextPowerupID = Random.Range(0, _powerups.Length);
-            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
+            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4.5f, 4.5f), 0);
             Instantiate(_powerups[_nextPowerupID], posToSpawn, Quaternion.identity, _powerUpContainer.transform);
             yield return new WaitForSeconds(_nextSpawn);
         }
@@ -73,7 +73,7 @@ public class SpawnManager : MonoBehaviour
         while (_isSpawningActive)
         {
             float _nextSpawn = Random.Range(3f, 6f);
-            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
+            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4.5f, 4.5f), 0);
             Instantiate(_ammoPowerup, posToSpawn, Quaternion.identity, _powerUpContainer.transform);
             yield return new WaitForSeconds(_nextSpawn);
         }
@@ -86,7 +86,7 @@ public class SpawnManager : MonoBehaviour
         while (_isSpawningActive)
         {
             float _nextSpawn = Random.Range(14f, 20f);
-            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4f, 6f), 0);
+            Vector3 posToSpawn = new Vector3(11f, Random.Range(-4.5f, 4.5f), 0);
             Instantiate(_healthPowerup, posToSpawn, Quaternion.identity, _powerUpContainer.transform);
             yield return new WaitForSeconds(_nextSpawn);
         }

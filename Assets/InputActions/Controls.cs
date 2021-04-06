@@ -49,6 +49,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""FireMissile"",
+                    ""type"": ""Button"",
+                    ""id"": ""d062d7cf-6bcf-47be-8293-11d056f2c731"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -260,6 +268,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Thrusters"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18179b1b-262d-4f41-a629-0facbbd010cf"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""FireMissile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""450a8097-3c2d-43f4-aa63-146f81c36666"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""FireMissile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -401,6 +431,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
         m_Player_Thrusters = m_Player.FindAction("Thrusters", throwIfNotFound: true);
+        m_Player_FireMissile = m_Player.FindAction("FireMissile", throwIfNotFound: true);
         // Death Menu
         m_DeathMenu = asset.FindActionMap("Death Menu", throwIfNotFound: true);
         m_DeathMenu_Restart = m_DeathMenu.FindAction("Restart", throwIfNotFound: true);
@@ -458,6 +489,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Quit;
     private readonly InputAction m_Player_Thrusters;
+    private readonly InputAction m_Player_FireMissile;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -466,6 +498,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Quit => m_Wrapper.m_Player_Quit;
         public InputAction @Thrusters => m_Wrapper.m_Player_Thrusters;
+        public InputAction @FireMissile => m_Wrapper.m_Player_FireMissile;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -487,6 +520,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Thrusters.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
                 @Thrusters.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
                 @Thrusters.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrusters;
+                @FireMissile.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireMissile;
+                @FireMissile.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireMissile;
+                @FireMissile.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireMissile;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -503,6 +539,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Thrusters.started += instance.OnThrusters;
                 @Thrusters.performed += instance.OnThrusters;
                 @Thrusters.canceled += instance.OnThrusters;
+                @FireMissile.started += instance.OnFireMissile;
+                @FireMissile.performed += instance.OnFireMissile;
+                @FireMissile.canceled += instance.OnFireMissile;
             }
         }
     }
@@ -599,6 +638,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
         void OnThrusters(InputAction.CallbackContext context);
+        void OnFireMissile(InputAction.CallbackContext context);
     }
     public interface IDeathMenuActions
     {

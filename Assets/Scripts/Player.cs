@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedBoostDuration = 5f;
     [SerializeField] private int _ammoMax = 15;
     [SerializeField] private int _ammoCurrent = 15;
+    [SerializeField] private int _missilesMax = 3;
+    [SerializeField] private int _missilesCurrent = 3;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
     [SerializeField] private int _shieldPower = 0;
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _explosionPrefab;
     [SerializeField] private Color[] _shieldPowerColor;
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
         }
 
         _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
+        _uiManager.UpdateMissiles(_missilesCurrent, _missilesMax);
     }
 
     // Update is called once per frame
@@ -199,6 +204,13 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
     }
 
+    public void AddMissile()
+    {
+        _missilesCurrent++;
+        if (_missilesCurrent > _missilesMax) _missilesCurrent = _missilesMax;
+        _uiManager.UpdateMissiles(_missilesCurrent, _missilesMax);
+    }
+
     public void EnemyKill()
     {
         int pointsToAdd = Random.Range(10, 21);
@@ -222,6 +234,25 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_speedBoostDuration);
         if (_isSpeedBoostActive) _speed /= _speedBoostMultiplier;
         _isSpeedBoostActive = false;
+    }
+
+    public Transform GetClosestEnemy(GameObject[] enemies)
+    {
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach(GameObject potentialTarget in enemies)
+        {
+            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if(dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget.transform;
+            }
+        }
+     
+        return bestTarget;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -270,5 +301,18 @@ public class Player : MonoBehaviour
             _thruster.SetActive(false);
             _speed /= _thrusterMultiplier;
         }
+    }
+
+    public void OnFireMissile(InputAction.CallbackContext context)
+    {
+        if (!context.performed || _missilesCurrent < 1) return;
+
+        GameObject[] _enemiesActive = GameObject.FindGameObjectsWithTag("Enemy");
+        Transform target = GetClosestEnemy(_enemiesActive);
+
+        GameObject missile = Instantiate(_missilePrefab, transform.position + new Vector3(0.2f, -.27f, 0), Quaternion.identity, _laserContainer.transform);
+        _missilesCurrent--;
+        _uiManager.UpdateMissiles(_missilesCurrent, _missilesMax);
+        missile.GetComponent<HomingMissile>().MissileTarget(target);
     }
 }
