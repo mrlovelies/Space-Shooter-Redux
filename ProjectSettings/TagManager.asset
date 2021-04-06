@@ -16,6 +16,7 @@ TagManager:
   - BG_Camera
   - Enemy_Laser
   - Laser_Container
+  - Missile_Explosion
   layers:
   - Default
   - TransparentFX

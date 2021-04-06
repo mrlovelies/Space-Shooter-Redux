@@ -43,10 +43,10 @@ public class Enemy : MonoBehaviour
     void CalculateMovement()
     {
         transform.Translate(Vector3.left * (_speed * Time.deltaTime));
-        if (transform.position.x < -11f)
+        if (transform.position.x < -9.3f)
         {
-            float randomY = Random.Range(-4f, 6f);
-            transform.position = new Vector3(11f, randomY, 0);
+            float randomY = Random.Range(-4.5f, 4.5f);
+            transform.position = new Vector3(9.3f, randomY, 0);
         }
     }
 
@@ -81,6 +81,17 @@ public class Enemy : MonoBehaviour
         {
             _isEnemyDead = true;
             Destroy(other.gameObject);
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = .5f;
+            _audioSource.Play();
+            if (_player != null) _player.EnemyKill();
+            Destroy(GetComponent<Collider2D>());
+            Destroy(gameObject, .50f);
+        }
+        
+        if (other.CompareTag("Missile_Explosion"))
+        {
+            _isEnemyDead = true;
             _anim.SetTrigger("OnEnemyDeath");
             _speed = .5f;
             _audioSource.Play();

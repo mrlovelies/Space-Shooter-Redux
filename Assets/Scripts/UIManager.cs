@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _gameOverText;
     [SerializeField] private Text _restartText;
     [SerializeField] private Text _ammoText;
+    [SerializeField] private Text _missilesText;
 
     void Start()
     {
@@ -53,6 +54,11 @@ public class UIManager : MonoBehaviour
         {
             _ammoText.color = Color.white;
         }
+    }
+
+    public void UpdateMissiles(int missilesCurrent, int missilesMax)
+    {
+        _missilesText.text = $"{missilesCurrent}/{missilesMax}";
     }
 
     IEnumerator GameOverFlickerRoutine()

@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 public class Powerup : MonoBehaviour
 {
     
-    [SerializeField] private int _powerupID; // 0: Triple Shot | 1: Speed Boost | 2: Shields
+    [SerializeField] private int _powerupID; // 0: Triple Shot | 1: Missile | 2: Shields
     [SerializeField] private float _speed = 5f;
     [SerializeField] private AudioClip _audioClip;
 
@@ -39,7 +39,7 @@ public class Powerup : MonoBehaviour
                     player.ActivateTripleShot();
                     break;
                 case 1:
-                    player.ActivateSpeedBoost();
+                    player.AddMissile();
                     break;
                 case 2:
                     player.ActivateShield();
