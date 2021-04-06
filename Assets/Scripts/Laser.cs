@@ -6,7 +6,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     [SerializeField] private float _speed = 10f;
-    private bool _isEnemyLaser = false;
+    public bool _isEnemyLaser = false;
     private float _reverseDirection = 1;
     void Update()
     {

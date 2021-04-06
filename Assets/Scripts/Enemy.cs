@@ -79,14 +79,19 @@ public class Enemy : MonoBehaviour
 
         if (other.CompareTag("Laser"))
         {
-            _isEnemyDead = true;
-            Destroy(other.gameObject);
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = .5f;
-            _audioSource.Play();
-            if (_player != null) _player.EnemyKill();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, .50f);
+            bool isEnemyLaser = other.GetComponent<Laser>()._isEnemyLaser;
+            if (!isEnemyLaser)
+            {
+                _isEnemyDead = true;
+                Destroy(other.gameObject);
+                _anim.SetTrigger("OnEnemyDeath");
+                _speed = .5f;
+                _audioSource.Play();
+                if (_player != null) _player.EnemyKill();
+                Destroy(GetComponent<Collider2D>());
+                Destroy(gameObject, .50f);
+            }
+            
         }
         
         if (other.CompareTag("Missile_Explosion"))

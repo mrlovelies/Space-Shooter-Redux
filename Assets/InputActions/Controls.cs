@@ -339,6 +339,17 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""841fb9d1-ab17-4633-95b0-5386784f3f0f"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""cb44187b-9542-49a4-af7f-0b78623a3afc"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
