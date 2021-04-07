@@ -17,6 +17,7 @@ TagManager:
   - Enemy_Laser
   - Laser_Container
   - Missile_Explosion
+  - Thruster_Gauge
   layers:
   - Default
   - TransparentFX

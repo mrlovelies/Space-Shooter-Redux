@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _shieldPower = 0;
     private float _canFire = -1f;
     private Vector3 _direction;
+    [SerializeField] private ThrusterGauge _thrusterGauge;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserContainer;
     [SerializeField] private GameObject _tripleShotPrefab;
@@ -49,7 +50,6 @@ public class Player : MonoBehaviour
 
     public delegate void PlayerDeath();
     public static event PlayerDeath onPlayerDeath;
-    
     private Controls.IPlayerActions _playerActionsImplementation;
 
     // Start is called before the first frame update
@@ -80,13 +80,16 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateAmmo(_ammoCurrent, _ammoMax);
         _uiManager.UpdateMissiles(_missilesCurrent, _missilesMax);
+        
+        
+        _thrusterGauge = GameObject.FindWithTag("Thruster_Gauge").GetComponent<ThrusterGauge>();
+        if (_thrusterGauge == null) Debug.LogError("ThrusterGauge::Player is NULL");
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculateMovement();
-        
     }
 
     void CalculateMovement()
@@ -289,17 +292,29 @@ public class Player : MonoBehaviour
             _audioSource.Play();
         }
     }
+    
+    public void ActivateThrusters()
+    {
+        _thruster.SetActive(true);
+        _speed *= _thrusterMultiplier;
+        _thrusterGauge.ActivateThrusters();
+    }
+
+    public void DeactivateThrusters()
+    {
+        _thruster.SetActive(false);
+        _speed /= _thrusterMultiplier;
+        _thrusterGauge.DeactivateThrusters();
+    }
 
     public void OnThrusters(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            _thruster.SetActive(true);
-            _speed *= _thrusterMultiplier;
+            ActivateThrusters();
         } else if (context.canceled)
         {
-            _thruster.SetActive(false);
-            _speed /= _thrusterMultiplier;
+            DeactivateThrusters();
         }
     }
 
