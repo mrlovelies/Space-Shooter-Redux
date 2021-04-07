@@ -14,6 +14,7 @@ public class ThrusterGauge : MonoBehaviour
     [SerializeField] private float _currentThrusters;
     [SerializeField] private bool _isThrusterActive = false;
     [SerializeField] private float _thrusterRechargeCooldown = 4f;
+    [SerializeField] private IEnumerator _thrusterRechargeRoutine;
     private bool _rechargeActive = false;
 
     private void Start()
@@ -47,7 +48,7 @@ public class ThrusterGauge : MonoBehaviour
     {
         if (_currentThrusters <= 0)
         {
-            _currentThrusters = 0;
+            _currentThrusters = 1f;
             DeactivateThrusters();
             _player.DeactivateThrusters();
         } else if (_currentThrusters >= _maxThrusters)
@@ -59,7 +60,7 @@ public class ThrusterGauge : MonoBehaviour
 
     public void ActivateThrusters()
     {
-        StopCoroutine(ThrusterRechargeRoutine());
+        StopCoroutine("ThrusterRechargeRoutine");
         _rechargeActive = false;
         _isThrusterActive = true;
     }
@@ -67,13 +68,14 @@ public class ThrusterGauge : MonoBehaviour
     public void DeactivateThrusters()
     {
         _isThrusterActive = false;
-        StartCoroutine(ThrusterRechargeRoutine());
+        StartCoroutine("ThrusterRechargeRoutine");
     }
 
     IEnumerator ThrusterRechargeRoutine()
     {
         yield return new WaitForSeconds(_thrusterRechargeCooldown);
-
+        // Additional yield to allow StopRoutine to work effectively
+        yield return new WaitForSeconds(.1f);
         _rechargeActive = true;
     }
 }
