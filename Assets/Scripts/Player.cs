@@ -126,8 +126,9 @@ public class Player : MonoBehaviour
             }
             return;
         }
-        
 
+
+        CameraShake.Shake(.25f, .1f);
         _lives--;
         _uiManager.UpdateLives(_lives);
 
