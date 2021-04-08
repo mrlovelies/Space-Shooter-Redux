@@ -6,9 +6,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f;
+    public float _speed = 5f;
+    public int _health = 1;
     [SerializeField] private float _fireRate = 3f;
     private bool _isEnemyDead = false;
     private float _canFire = -1f;
@@ -18,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     private GameObject _laserContainer;
 
-    void Start()
+    protected virtual void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         if (_player == null) Debug.LogError("Player::Enemy is NULL");
@@ -34,13 +35,13 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void Update()
+    protected virtual void FixedUpdate()
     {
         CalculateMovement();
         FireLasers();
     }
 
-    void CalculateMovement()
+    protected virtual void CalculateMovement()
     {
         transform.Translate(Vector3.left * (_speed * Time.deltaTime));
         if (transform.position.x < -9.3f)
@@ -62,39 +63,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    //TODO: Give weapon types a damage var
+    private void Damage(int damageDealt)
     {
-        if (other.CompareTag("Player"))
-        {
-            _isEnemyDead = true;
-            if (_player != null)
-                _player.Damage();
+        _health -= damageDealt;
 
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = .5f;
-            _audioSource.Play();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, .50f);
-        }
-
-        if (other.CompareTag("Laser"))
-        {
-            bool isEnemyLaser = other.GetComponent<Laser>()._isEnemyLaser;
-            if (!isEnemyLaser)
-            {
-                _isEnemyDead = true;
-                Destroy(other.gameObject);
-                _anim.SetTrigger("OnEnemyDeath");
-                _speed = .5f;
-                _audioSource.Play();
-                if (_player != null) _player.EnemyKill();
-                Destroy(GetComponent<Collider2D>());
-                Destroy(gameObject, .50f);
-            }
-            
-        }
-        
-        if (other.CompareTag("Missile_Explosion"))
+        if (_health < 1)
         {
             _isEnemyDead = true;
             _anim.SetTrigger("OnEnemyDeath");
@@ -103,6 +77,33 @@ public class Enemy : MonoBehaviour
             if (_player != null) _player.EnemyKill();
             Destroy(GetComponent<Collider2D>());
             Destroy(gameObject, .50f);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (_player != null)
+                _player.Damage();
+
+            Damage(1);
+        }
+
+        if (other.CompareTag("Laser"))
+        {
+            bool isEnemyLaser = other.GetComponent<Laser>()._isEnemyLaser;
+            if (!isEnemyLaser)
+            {
+                Destroy(other.gameObject);
+                Damage(1);
+            }
+            
+        }
+        
+        if (other.CompareTag("Missile_Explosion"))
+        {
+            Damage(2);
         }
     }
 }
