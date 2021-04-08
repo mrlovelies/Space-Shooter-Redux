@@ -111,11 +111,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8542222873785168620}
-  - component: {fileID: 8542222873785168531}
   - component: {fileID: 8542222873785168530}
   - component: {fileID: 8464000808113184491}
   - component: {fileID: 8495559166261152197}
   - component: {fileID: 79883312736008581}
+  - component: {fileID: 7529215053860743042}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -138,21 +138,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8542222873785168531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8542222873785168528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd30575a535b971469b2560e13edec94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 5
-  _fireRate: 3
-  _laserPrefab: {fileID: 6947159777418976267, guid: c1d3a611b660e9f4e8e0de3d73f75215, type: 3}
 --- !u!50 &8542222873785168530
 Rigidbody2D:
   serializedVersion: 4
@@ -356,3 +341,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7529215053860743042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542222873785168528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d333717b61190e4693e6a24cf1183a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 5
+  _fireRate: 3
+  _laserPrefab: {fileID: 0}

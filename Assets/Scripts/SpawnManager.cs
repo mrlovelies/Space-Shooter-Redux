@@ -16,6 +16,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _powerUpContainer;
     [SerializeField] private GameObject _ammoPowerup;
     [SerializeField] private GameObject _healthPowerup;
+    [SerializeField] private GameObject[] _enemyTypes;
     public void StartSpawning()
     {
         _isSpawningActive = true;
@@ -47,7 +48,7 @@ public class SpawnManager : MonoBehaviour
         while (_isSpawningActive)
         {
             Vector3 posToSpawn = new Vector3(11f, Random.Range(-4.5f, 4.5f), 0);
-            Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer.transform);
+            Instantiate(_enemyTypes[Random.Range(0, _enemyTypes.Length)], posToSpawn, Quaternion.identity, _enemyContainer.transform);
             yield return new WaitForSeconds(_enemySpawnRate);
         }
     }
