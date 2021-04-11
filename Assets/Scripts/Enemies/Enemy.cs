@@ -63,19 +63,21 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    //TODO: Give weapon types a damage var
     private void Damage(int damageDealt)
     {
         _health -= damageDealt;
 
         if (_health < 1)
         {
-            if (_player != null && !_isEnemyDead) { _player.EnemyKill();}
-            _isEnemyDead = true;
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = .5f;
-            _audioSource.Play();
-            Destroy(gameObject, .50f);
+            if (_player != null && !_isEnemyDead)
+            {
+                _player.EnemyKill();
+                _anim.SetTrigger("OnEnemyDeath");
+                _speed = .5f;
+                _audioSource.Play();
+                Destroy(gameObject, .50f);
+                _isEnemyDead = true;
+            }
         }
     }
 

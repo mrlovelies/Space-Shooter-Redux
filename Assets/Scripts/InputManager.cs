@@ -15,16 +15,16 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.onPlayerDeath += this.OnPlayerDeath;
+        Player.onPlayerDeath += this.UseRestartMenu;
     }
 
     private void OnDisable()
     {
-        Player.onPlayerDeath -= this.OnPlayerDeath;
+        Player.onPlayerDeath -= this.UseRestartMenu;
     }
 
-    public void OnPlayerDeath()
+    public void UseRestartMenu()
     {
-        _playerInput.currentActionMap = _playerInput.actions.FindActionMap("Death Menu");
+        _playerInput.currentActionMap = _playerInput.actions.FindActionMap("Restart Screen");
     }
 }

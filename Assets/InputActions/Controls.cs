@@ -294,7 +294,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""Death Menu"",
+            ""name"": ""Restart Screen"",
             ""id"": ""d97a1dc7-d633-4e27-be7d-39ba0b449301"",
             ""actions"": [
                 {
@@ -443,10 +443,10 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
         m_Player_Thrusters = m_Player.FindAction("Thrusters", throwIfNotFound: true);
         m_Player_FireMissile = m_Player.FindAction("FireMissile", throwIfNotFound: true);
-        // Death Menu
-        m_DeathMenu = asset.FindActionMap("Death Menu", throwIfNotFound: true);
-        m_DeathMenu_Restart = m_DeathMenu.FindAction("Restart", throwIfNotFound: true);
-        m_DeathMenu_Quit = m_DeathMenu.FindAction("Quit", throwIfNotFound: true);
+        // Restart Screen
+        m_RestartScreen = asset.FindActionMap("Restart Screen", throwIfNotFound: true);
+        m_RestartScreen_Restart = m_RestartScreen.FindAction("Restart", throwIfNotFound: true);
+        m_RestartScreen_Quit = m_RestartScreen.FindAction("Quit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -558,34 +558,34 @@ public class @Controls : IInputActionCollection, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // Death Menu
-    private readonly InputActionMap m_DeathMenu;
-    private IDeathMenuActions m_DeathMenuActionsCallbackInterface;
-    private readonly InputAction m_DeathMenu_Restart;
-    private readonly InputAction m_DeathMenu_Quit;
-    public struct DeathMenuActions
+    // Restart Screen
+    private readonly InputActionMap m_RestartScreen;
+    private IRestartScreenActions m_RestartScreenActionsCallbackInterface;
+    private readonly InputAction m_RestartScreen_Restart;
+    private readonly InputAction m_RestartScreen_Quit;
+    public struct RestartScreenActions
     {
         private @Controls m_Wrapper;
-        public DeathMenuActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Restart => m_Wrapper.m_DeathMenu_Restart;
-        public InputAction @Quit => m_Wrapper.m_DeathMenu_Quit;
-        public InputActionMap Get() { return m_Wrapper.m_DeathMenu; }
+        public RestartScreenActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_RestartScreen_Restart;
+        public InputAction @Quit => m_Wrapper.m_RestartScreen_Quit;
+        public InputActionMap Get() { return m_Wrapper.m_RestartScreen; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(DeathMenuActions set) { return set.Get(); }
-        public void SetCallbacks(IDeathMenuActions instance)
+        public static implicit operator InputActionMap(RestartScreenActions set) { return set.Get(); }
+        public void SetCallbacks(IRestartScreenActions instance)
         {
-            if (m_Wrapper.m_DeathMenuActionsCallbackInterface != null)
+            if (m_Wrapper.m_RestartScreenActionsCallbackInterface != null)
             {
-                @Restart.started -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
-                @Restart.performed -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
-                @Restart.canceled -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnRestart;
-                @Quit.started -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_DeathMenuActionsCallbackInterface.OnQuit;
+                @Restart.started -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnRestart;
+                @Quit.started -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_RestartScreenActionsCallbackInterface.OnQuit;
             }
-            m_Wrapper.m_DeathMenuActionsCallbackInterface = instance;
+            m_Wrapper.m_RestartScreenActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Restart.started += instance.OnRestart;
@@ -597,7 +597,7 @@ public class @Controls : IInputActionCollection, IDisposable
             }
         }
     }
-    public DeathMenuActions @DeathMenu => new DeathMenuActions(this);
+    public RestartScreenActions @RestartScreen => new RestartScreenActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -651,7 +651,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnThrusters(InputAction.CallbackContext context);
         void OnFireMissile(InputAction.CallbackContext context);
     }
-    public interface IDeathMenuActions
+    public interface IRestartScreenActions
     {
         void OnRestart(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);

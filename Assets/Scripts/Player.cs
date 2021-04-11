@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
         if (_waveCreator == null) Debug.LogError("WaveCreator::Player is NULL");
 
         _totalWaves = _waveCreator.waves.Count;
-        Debug.Log($"Total Waves: {_totalWaves}");
 
         _uiManager = GameObject.FindWithTag("UI_Manager").GetComponent<UIManager>();
         if (_uiManager == null) Debug.LogError("UIManager::Player is NULL");
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour
         if (_shieldVisualizerSprite == null) Debug.LogError("Shield_Visualizer->SpriteRenderer::Player is NULL"); 
 
         _audioSource = GetComponent<AudioSource>();
-        //Assert.IsNull(_audioSource, "_audioSource == null");
         if (_audioSource == null)
         {
             Debug.LogError("Null");
@@ -233,8 +231,6 @@ public class Player : MonoBehaviour
         EnemiesDestroyedInWave++;
         if (EnemiesDestroyedInWave == _waveCreator.EnemiesInWave && _currentWave != _totalWaves) NextWave();
         if (_currentWave == _totalWaves && EnemiesDestroyedInWave == _waveCreator.EnemiesInWave) AllWavesDefeated();
-        Debug.Log($"Enemies Destroyed: {EnemiesDestroyedInWave}");
-        Debug.Log($"Enemies in Wave: {_waveCreator.EnemiesInWave}");
     }
 
     public void NextWave()
@@ -246,6 +242,7 @@ public class Player : MonoBehaviour
     
     void AllWavesDefeated()
     {
+        _inputManager.UseRestartMenu();
         _spawnManager.StopSpawning(); 
         _uiManager.StartGameStatusScreen("Victory");
     }
