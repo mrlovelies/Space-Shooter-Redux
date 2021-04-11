@@ -9,7 +9,7 @@ public class HomingMissile : MonoBehaviour
     private Player _player;
     private Transform _target;
     [SerializeField] private float _timeToExplode = 10f;
-    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _speed = 8f;
     [SerializeField] private float _rotateSpeed = 200f;
     [SerializeField] private GameObject _missileExplosion;
     private IEnumerator _timedExplosion;
