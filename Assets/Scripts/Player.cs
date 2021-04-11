@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private int _score = 0;
     [SerializeField] private int _shieldPower = 0;
+    public int _currentWave = 1;
+    private int _totalWaves;
+    public int enemiesDestroyedInWave;
     private float _canFire = -1f;
     private Vector3 _direction;
     [SerializeField] private ThrusterGauge _thrusterGauge;
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _ammoEmptySoundClip;
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
+    private WaveCreator _waveCreator;
     private UIManager _uiManager;
     private InputManager _inputManager;
 
@@ -55,8 +59,15 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _spawnManager = GameObject.FindWithTag("Spawn_Manager").GetComponent<SpawnManager>();
+        GameObject _spawnManagerObj = GameObject.FindWithTag("Spawn_Manager");
+        _spawnManager = _spawnManagerObj.GetComponent<SpawnManager>();
         if (_spawnManager == null) Debug.LogError("SpawnManager::Player is NULL");
+
+        _waveCreator = _spawnManagerObj.GetComponent<WaveCreator>();
+        if (_waveCreator == null) Debug.LogError("WaveCreator::Player is NULL");
+
+        _totalWaves = _waveCreator.waves.Count;
+        Debug.Log($"Total Waves: {_totalWaves}");
 
         _uiManager = GameObject.FindWithTag("UI_Manager").GetComponent<UIManager>();
         if (_uiManager == null) Debug.LogError("UIManager::Player is NULL");
@@ -106,7 +117,7 @@ public class Player : MonoBehaviour
 
     private void InstantiateLaser(GameObject _laserTypePrefab)
     {
-        Instantiate(_laserTypePrefab, transform.position + new Vector3(.75f,0,0), Quaternion.identity, _laserContainer.transform);
+        Instantiate(_laserTypePrefab, transform.position + new Vector3(0,0,0), Quaternion.identity, _laserContainer.transform);
     }
 
     public void Damage()
@@ -219,6 +230,30 @@ public class Player : MonoBehaviour
     {
         int pointsToAdd = Random.Range(10, 21);
         AddScore(pointsToAdd);
+        EnemiesDestroyedInWave++;
+        if (EnemiesDestroyedInWave == _waveCreator.EnemiesInWave && _currentWave != _totalWaves) NextWave();
+        if (_currentWave == _totalWaves && EnemiesDestroyedInWave == _waveCreator.EnemiesInWave) AllWavesDefeated();
+        Debug.Log($"Enemies Destroyed: {EnemiesDestroyedInWave}");
+        Debug.Log($"Enemies in Wave: {_waveCreator.EnemiesInWave}");
+    }
+
+    public void NextWave()
+    {
+        _currentWave++;
+        EnemiesDestroyedInWave = 0;
+        _waveCreator.StartWave(_currentWave);
+    }
+    
+    void AllWavesDefeated()
+    {
+        _spawnManager.StopSpawning(); 
+        _uiManager.StartGameStatusScreen("Victory");
+    }
+
+    public int EnemiesDestroyedInWave
+    {
+        get { return enemiesDestroyedInWave; }
+        set { enemiesDestroyedInWave = value; }
     }
 
     public void AddScore(int score)

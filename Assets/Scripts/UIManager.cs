@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _scoreText;
     [SerializeField] private Image _livesImage;
     [SerializeField] private Sprite[] _livesSprite;
-    [SerializeField] private Text _gameOverText;
+    [SerializeField] private Text _gameStatusText;
     [SerializeField] private Text _restartText;
     [SerializeField] private Text _ammoText;
     [SerializeField] private Text _missilesText;
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = $"Score: {0}";
-        _gameOverText.gameObject.SetActive(false);
+        _gameStatusText.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -61,22 +61,27 @@ public class UIManager : MonoBehaviour
         _missilesText.text = $"{missilesCurrent}/{missilesMax}";
     }
 
-    IEnumerator GameOverFlickerRoutine()
+    IEnumerator GameStatusFlickerRoutine(string gameStatusMessage)
     {
         while (true)
         {
-            _gameOverText.text = "GAME OVER";
+            _gameStatusText.text = $"{gameStatusMessage}";
             yield return new WaitForSeconds(0.5f);
-            _gameOverText.text = "";
+            _gameStatusText.text = "";
             yield return new WaitForSeconds(0.5f);
         }
     }
 
     public void OnPlayerDeath()
     {
-        _gameOverText.gameObject.SetActive(true);
+        StartGameStatusScreen("Game Over");
+    }
+
+    public void StartGameStatusScreen(string msg)
+    {
+        _gameStatusText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
-        StartCoroutine(GameOverFlickerRoutine());
+        StartCoroutine(GameStatusFlickerRoutine(msg));
     }
 
     public void OnRestart(InputAction.CallbackContext context)

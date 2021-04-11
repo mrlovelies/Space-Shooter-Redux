@@ -70,12 +70,11 @@ public abstract class Enemy : MonoBehaviour
 
         if (_health < 1)
         {
+            if (_player != null && !_isEnemyDead) { _player.EnemyKill();}
             _isEnemyDead = true;
             _anim.SetTrigger("OnEnemyDeath");
             _speed = .5f;
             _audioSource.Play();
-            if (_player != null) _player.EnemyKill();
-            Destroy(GetComponent<Collider2D>());
             Destroy(gameObject, .50f);
         }
     }
