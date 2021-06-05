@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _thruster;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _ammoEmptySoundClip;
+    [SerializeField] private GameObject _playerNameInputContainer;
+    [SerializeField] private InputField _playerNameInputText;
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private WaveCreator _waveCreator;
@@ -245,6 +248,14 @@ public class Player : MonoBehaviour
         _inputManager.UseRestartMenu();
         _spawnManager.StopSpawning(); 
         _uiManager.StartGameStatusScreen("Victory");
+        _playerNameInputContainer.SetActive(true);
+    }
+
+    public void SubmitScore()
+    {
+        String _playerName = _playerNameInputText.text;
+        Score _score = new Score(_playerName, this._score);
+        DatabaseHandler.PostScore(_score);
     }
 
     public int EnemiesDestroyedInWave
@@ -364,3 +375,4 @@ public class Player : MonoBehaviour
         missile.GetComponent<HomingMissile>().MissileTarget(target);
     }
 }
+

@@ -18,6 +18,8 @@ TagManager:
   - Laser_Container
   - Missile_Explosion
   - Thruster_Gauge
+  - Name_Input
+  - Name_Input_Container
   layers:
   - Default
   - TransparentFX

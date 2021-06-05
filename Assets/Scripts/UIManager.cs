@@ -15,11 +15,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _restartText;
     [SerializeField] private Text _ammoText;
     [SerializeField] private Text _missilesText;
+    [SerializeField] private GameObject _nameInputContainer;
+    [SerializeField] private InputField _nameInput;
 
     void Start()
     {
         _scoreText.text = $"Score: {0}";
         _gameStatusText.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        DisableControls();
     }
 
     private void OnEnable()
@@ -30,6 +37,18 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         Player.onPlayerDeath -= this.OnPlayerDeath;
+    }
+
+    private void DisableControls()
+    {
+        if (_nameInput.isFocused)
+        {
+            InputSystem.DisableDevice(Keyboard.current);
+        }
+        else
+        {
+            InputSystem.EnableDevice(Keyboard.current);
+        }
     }
 
     public void UpdateScore(int playerScore)
@@ -81,6 +100,7 @@ public class UIManager : MonoBehaviour
     {
         _gameStatusText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
+        _nameInputContainer.SetActive(true);
         StartCoroutine(GameStatusFlickerRoutine(msg));
     }
 

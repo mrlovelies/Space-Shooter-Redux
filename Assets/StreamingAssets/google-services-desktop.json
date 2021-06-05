@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "522602008276",
+    "project_id": "space-shooter-redux-4565b",
+    "storage_bucket": "space-shooter-redux-4565b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522602008276:android:44a6a4f04b8578f8f07541",
+        "android_client_info": {
+          "package_name": "com.SecondaryCharacterStudios.SpaceShooterRedux"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522602008276-4qsvbb55vqa3eclbth7rrsaumf48sdln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9iYq_wA5Dvkq419EP0enZ8xPBuVaM-2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522602008276-4qsvbb55vqa3eclbth7rrsaumf48sdln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

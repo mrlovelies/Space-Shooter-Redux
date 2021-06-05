@@ -317,17 +317,6 @@ public class @Controls : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""e98f2738-a660-4913-88e7-52757cdc033e"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Restart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3c4362c0-7cd2-4f35-a633-0f21d47fbccf"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
@@ -339,8 +328,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""841fb9d1-ab17-4633-95b0-5386784f3f0f"",
-                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""id"": ""4e51d4c8-3a51-46b7-a26d-ae46b4f2f9cd"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
